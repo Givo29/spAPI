@@ -1,0 +1,25 @@
+---
+version: "3"
+services:
+  api-backend:
+    stdin_open: true
+    restart: always
+    container_name: api-backend
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    ports:
+      - 10080:3000
+    volumes:
+      - ./src:/app/public
+
+  api-database:
+    restart: always
+    container_name: api-database
+    image: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=api
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    expose:
+      - 27017
