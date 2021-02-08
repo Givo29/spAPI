@@ -8,7 +8,7 @@ const requiresLogin = _ => {
         if (req.session && req.session.userId) {
             next();
         } else {
-            res.status(401).json({ message: "You must be logged in to view this page" });
+            res.redirect('/login');
         }
     }
 }
@@ -27,7 +27,7 @@ router.post('/', requiresLogin(), async (req, res) => {
     });
 
     try {
-        const newUser = await user.save();
+        await user.save();
         res.redirect('/login');
     } catch (error) {
         res.status(400).json({ message: error.message });

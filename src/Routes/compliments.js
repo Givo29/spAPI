@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
 const Compliment = require('../Models/compliment');
 
 
@@ -8,7 +9,7 @@ const requiresLogin = _ => {
         if (req.session && req.session.userId) {
             next();
         } else {
-            res.status(401).json({ message: "You must be logged in to view this page" });
+            res.redirect('/login');
         }
     }
 }
@@ -30,11 +31,16 @@ router.post('/', requiresLogin(), async (req, res) => {
     });
 
     try {
-        const newCompliment = await compliment.save();
-        res.status(201).json(newCompliment);
+        await compliment.save();
+        res.redirect('/api/compliment/new');
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 });
+
+router.get('/new', requiresLogin(), (_, res) => {
+    res.sendFile(path.join(__dirname, '..', 'Static', 'newCompliment.html'));
+})
+
 
 module.exports = router;
