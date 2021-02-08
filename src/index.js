@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv').config()
 
 // Routes
 const complimentRoute = require('./Routes/compliments');
@@ -8,10 +9,10 @@ const app = express();
 app.use(express.json());
 app.use('/api/compliment', complimentRoute);
 
-mongoose.connect('mongodb://api-database:27017/api', {
+mongoose.connect(`${ process.env.MONGO_URI }${ process.env.MONGO_INITDB_DATABASE }`, {
     'auth': { 'authSource': 'admin' },
-    'user': 'root',
-    'pass': 'password',
+    'user': process.env.MONGO_INITDB_ROOT_USERNAME,
+    'pass': process.env.MONGO_INITDB_ROOT_PASSWORD,
     'useMongoClient': true
 });
 
@@ -23,5 +24,5 @@ mongoose.connection.once('open', _ => {
 });
 
 app.listen(3000, _ => {
-    console.log("http://localhost:10080");
+    console.log('Server Started');
 });

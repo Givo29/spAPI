@@ -8,6 +8,8 @@ services:
     build:
       context: ./src
       dockerfile: Dockerfile
+    env_file:
+      - .env
     ports:
       - 10080:3000
     volumes:
@@ -19,9 +21,7 @@ services:
     restart: always
     container_name: api-database
     image: mongo
-    environment:
-      - MONGO_INITDB_DATABASE=api
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=password
+    env_file:
+      - .env
     expose:
       - 27017
