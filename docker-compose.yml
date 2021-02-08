@@ -12,6 +12,8 @@ services:
       - 10080:3000
     volumes:
       - ./src:/app/public
+    depends_on:
+      - api-database
 
   api-database:
     restart: always
