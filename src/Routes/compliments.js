@@ -7,7 +7,7 @@ router.get('/', async (_, res) => {
         let count = await Compliment.count();
         let random = Math.floor(Math.random() * count);
         const compliment = await Compliment.findOne().skip(random);
-        res.json(compliment)
+        res.json({ string: compliment.string })
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
