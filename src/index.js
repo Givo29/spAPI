@@ -4,7 +4,7 @@ const session = require('express-session');
 require('dotenv').config()
 
 // Routes
-const complimentRoute = require('./Routes/compliments');
+const apiRoute = require('./Routes/api');
 const registerRoute = require('./Routes/register');
 const loginRoute = require('./Routes/login');
 const logoutRoute = require('./Routes/logout');
@@ -18,7 +18,7 @@ app.use(session({
     resave: true,
     saveUninitialized: false
 }));
-app.use('/api/compliment', complimentRoute);
+app.use('/', apiRoute);
 app.use('/register', registerRoute);
 app.use('/login', loginRoute);
 app.use('/logout', logoutRoute);

@@ -14,7 +14,19 @@ const requiresLogin = _ => {
     }
 }
 
-router.get('/', async (_, res) => {
+router.get('/', (_, res) => {
+    let response = {
+        "endpoints": [
+            "GET /compliment"
+        ]
+    };
+    res.setHeader('Content-Type', 'application/json');
+    // res.status(200).json(response);
+    res.end(JSON.stringify(response, null, 3));
+});
+
+// Compliment Routes
+router.get('/compliment', async (_, res) => {
     try {
         let count = await Compliment.estimatedDocumentCount();
         let random = Math.floor(Math.random() * count);
@@ -25,7 +37,7 @@ router.get('/', async (_, res) => {
     }
 });
 
-router.post('/', requiresLogin(), async (req, res) => {
+router.post('/compliment', requiresLogin(), async (req, res) => {
     const compliment = new Compliment({
         string: req.body.string
     });
@@ -38,9 +50,9 @@ router.post('/', requiresLogin(), async (req, res) => {
     }
 });
 
-router.get('/new', requiresLogin(), (_, res) => {
+router.get('/compliment/new', requiresLogin(), (_, res) => {
     res.sendFile(path.join(__dirname, '..', 'Static', 'newCompliment.html'));
-})
+});
 
 
 module.exports = router;
