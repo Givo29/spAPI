@@ -21,7 +21,6 @@ router.get('/', (_, res) => {
         ]
     };
     res.setHeader('Content-Type', 'application/json');
-    // res.status(200).json(response);
     res.end(JSON.stringify(response, null, 3));
 });
 
@@ -44,7 +43,7 @@ router.post('/compliment', requiresLogin(), async (req, res) => {
 
     try {
         await compliment.save();
-        res.redirect('/api/compliment/new');
+        res.redirect('/compliment/new');
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
